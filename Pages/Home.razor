@@ -2,10 +2,20 @@
 
 @using Microsoft.FluentUI.AspNetCore.Components
 @using Icons = Microsoft.FluentUI.AspNetCore.Components.Icons
+@using MoneyBlazorWasm.Pages
+@using MoneyBlazorWasm.Pages.Expense
+
+@inject IDialogService DialogService
+
 
 <div style="height: 500px;">
     <FluentMainLayout NavMenuTitle="Navigation menu">
-        <Header><h3>Fluent UI Components</h3></Header>
+        <Header>
+            <h3>Fluent UI Components</h3>
+            <FluentButton IconEnd="@(new Icons.Regular.Size16.Settings())"
+            Title="Globe"
+            OnClick="@OnChangeIncome" />
+        </Header>
         <SubHeader><p>A subheader here</p></SubHeader>
         <Body>
             <FluentBodyContent>
@@ -33,6 +43,17 @@
                 <p>
                     <FluentButton Appearance="Appearance.Accent" OnClick="@OnChangeIncome">Sum</FluentButton>
                 </p>
+                <p>
+                    <div style="margin-top: 1rem;">
+
+                        <FluentButton Appearance="Appearance.Accent" OnClick="@OpenAsync">Open dialog</FluentButton>
+
+                        <p>Name: @DialogData.Name - Age: @DialogData.Age</p>
+                    </div>
+
+
+
+                </p>
             </FluentBodyContent>
         </Body>
         <NavMenuContent>
@@ -42,6 +63,8 @@
 </div>
 
 @code {
+
+
     bool ShowHeader = true;
     bool ShowNavMenu = true;
     bool ShowBodyContent = true;
@@ -49,9 +72,40 @@
 
     float? income, expense, sum;
 
-	private void OnChangeIncome()
-	{
-		// income = value;
-		sum = income - expense;
-	}
+    private void OnChangeIncome()
+    {
+        // income = value;
+        sum = income - expense;
+    }
+
+    public record NameAndAge
+    {
+        public int Id { get; set; }
+        public string? Name { get; set; }
+        public int Age { get; set; }
+    }
+
+    NameAndAge DialogData { get; set; } = new() { Id = 1, Name = "Bill", Age = 42 };
+
+    private async Task OpenAsync()
+    {
+        // Create a new instance of DialogData
+        // to allow the user to cancel the update
+        var data = DialogData with { Id = 1 };
+
+        var dialog = await DialogService.ShowDialogAsync<SimpleCustomizeDialog>(data, new DialogParameters()
+            {
+                Height = "240px",
+                Title = $"Updating the {DialogData.Name} sheet",
+                PreventDismissOnOverlayClick = true,
+                PreventScroll = true,
+            });
+
+            var result = await dialog.Result;
+            if (!result.Cancelled && result.Data != null)
+            {
+                DialogData = (NameAndAge)result.Data;
+            }
+
+        }
 }
