@@ -20,28 +20,29 @@
 
 @* Body *@
 <FluentDialogBody>
-    <FluentSelect Items=@expenseOptions
-                  OptionText="@(i => i.Text)"
-                  OptionValue="@(i => i.Value)"
-                  OptionSelected="@(i => i.Selected)"
-                  @bind-SelectedOption="@selectedExpenseOption"
-                  @bind-Value="@expenseValue" />
-
+    <p>
+        <FluentSelect Items=@expenseOptions
+                      OptionText="@(i => i.Text)"
+                      OptionValue="@(i => i.Value)"
+                      OptionSelected="@(i => i.Selected)"
+                      @bind-SelectedOption="@selectedExpenseOption"
+                      @bind-Value="@expenseValue" />
+    </p>
+    
     @if (expenseValue == "expense")
     {
+        <p>
         <FluentSelect Items=@creditOptions
                       OptionText="@(i => i.Text)"
                       OptionValue="@(i => i.Value)"
                       OptionSelected="@(i => i.Selected)"
                       @bind-SelectedOption="@selectedStringOption"
                       @bind-Value="@stringValue" />
+                      </p>
     }
-
-    
-
+    <FluentNumberField @bind-Value="@Content.Num">จำนวน:</FluentNumberField>
+    <FluentTextField @bind-Value="@Content.Name">รายการ:</FluentTextField>
 </FluentDialogBody>
-
-
 
 
 @code {
