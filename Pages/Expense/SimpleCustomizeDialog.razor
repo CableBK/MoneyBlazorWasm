@@ -20,6 +20,7 @@
 
 @* Body *@
 <FluentDialogBody>
+    <FluentStack Orientation="Orientation.Vertical" >
     <p>
         <FluentSelect Items=@expenseOptions
                       OptionText="@(i => i.Text)"
@@ -40,8 +41,14 @@
                       @bind-Value="@stringValue" />
                       </p>
     }
-    <FluentNumberField @bind-Value="@Content.Num">จำนวน:</FluentNumberField>
-    <FluentTextField @bind-Value="@Content.Name">รายการ:</FluentTextField>
+        <p>
+        <FluentNumberField @bind-Value="@Content.Num">จำนวน:</FluentNumberField>
+        </p>
+        <p>
+        <FluentTextField @bind-Value="@Content.Name">รายการ:</FluentTextField>
+        </p>
+    </FluentStack>
+
 </FluentDialogBody>
 
 
