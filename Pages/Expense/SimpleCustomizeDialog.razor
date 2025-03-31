@@ -20,14 +20,24 @@
 
 @* Body *@
 <FluentDialogBody>
-    <FluentSelect Items=@stringOptions
+    <FluentSelect Items=@expenseOptions
                   OptionText="@(i => i.Text)"
                   OptionValue="@(i => i.Value)"
                   OptionSelected="@(i => i.Selected)"
-                  @bind-SelectedOption="@selectedStringOption"
-                  @bind-Value="@stringValue" />
-    <FluentTextField @bind-Value="@Content.Name">Name:</FluentTextField>
-    <FluentNumberField @bind-Value="@Content.Num">Num:</FluentNumberField>
+                  @bind-SelectedOption="@selectedExpenseOption"
+                  @bind-Value="@expenseValue" />
+
+    @if (expenseValue == "expense")
+    {
+        <FluentSelect Items=@creditOptions
+                      OptionText="@(i => i.Text)"
+                      OptionValue="@(i => i.Value)"
+                      OptionSelected="@(i => i.Selected)"
+                      @bind-SelectedOption="@selectedStringOption"
+                      @bind-Value="@stringValue" />
+    }
+
+    
 
 </FluentDialogBody>
 
@@ -56,10 +66,26 @@
     string? intValue;
     Option<int>? selectedIntOption;
 
-    List<Option<string>> stringOptions = new()
+    string? expenseValue;
+    Option<string> selectedExpenseOption = default!;
+    string? intExpenseValue;
+    Option<int>? selectedIntExpenseOption;
+
+    List<Option<string>> expenseOptions = new()
         {
             { new Option<string> { Value = "income", Text = "รายรับ", Selected = true } },
             { new Option<string> { Value = "expense", Text = "รายจ่าย"} },
 
         };
+
+    List<Option<string>> creditOptions = new()
+        {
+            { new Option<string> { Value = "kbank", Text = "KBANK", Selected = true } },
+            { new Option<string> { Value = "kbankmastercard", Text = "master"} },
+            { new Option<string> { Value = "krungsri", Text = "master"} },
+
+        };
 }
+
+
+
