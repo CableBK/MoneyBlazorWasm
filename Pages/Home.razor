@@ -19,7 +19,7 @@
         <SubHeader><p>A subheader here</p></SubHeader>
         <Body>
             <FluentBodyContent>
-                <p>
+                @*<p>
                     income
                     <FluentNumberField @bind-Value="@income">Float</FluentNumberField>
                     <br />
@@ -39,20 +39,15 @@
                     <br />
                     Example float: @sum
                     <br />
-                </p>
+                </p>*@
                 <p>
                     <FluentButton Appearance="Appearance.Accent" OnClick="@OnChangeIncome">Sum</FluentButton>
                 </p>
                 <p>
                     <div style="margin-top: 1rem;">
-
                         <FluentButton Appearance="Appearance.Accent" OnClick="@OpenAsync">Open dialog</FluentButton>
-
-                        <p>Name: @DialogData.Name - Age: @DialogData.Age</p>
+                        <p>Name: @DialogData.Name - Age: @DialogData.Num</p>
                     </div>
-
-
-
                 </p>
             </FluentBodyContent>
         </Body>
@@ -63,8 +58,6 @@
 </div>
 
 @code {
-
-
     bool ShowHeader = true;
     bool ShowNavMenu = true;
     bool ShowBodyContent = true;
@@ -82,10 +75,10 @@
     {
         public int Id { get; set; }
         public string? Name { get; set; }
-        public int Age { get; set; }
+        public float Num { get; set; }
     }
 
-    NameAndAge DialogData { get; set; } = new() { Id = 1, Name = "Bill", Age = 42 };
+    NameAndAge DialogData { get; set; } = new() { Id = 1, Name = "Bill", Num = 42 };
 
     private async Task OpenAsync()
     {
@@ -106,6 +99,5 @@
             {
                 DialogData = (NameAndAge)result.Data;
             }
-
         }
 }
