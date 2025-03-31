@@ -20,14 +20,14 @@
 
 @* Body *@
 <FluentDialogBody>
+    <FluentSelect Items=@stringOptions
+                  OptionText="@(i => i.Text)"
+                  OptionValue="@(i => i.Value)"
+                  OptionSelected="@(i => i.Selected)"
+                  @bind-SelectedOption="@selectedStringOption"
+                  @bind-Value="@stringValue" />
     <FluentTextField @bind-Value="@Content.Name">Name:</FluentTextField>
     <FluentNumberField @bind-Value="@Content.Num">Num:</FluentNumberField>
-    <FluentCombobox Items=@stringOptions
-                    OptionText="@(i => i.Text)"
-                    OptionValue="@(i => i.Value)"
-                    OptionSelected="@(i => i.Selected)"
-                    @bind-SelectedOption="@selectedStringOption"
-                    @bind-Value="@stringValue" />
 
 </FluentDialogBody>
 
